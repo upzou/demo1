@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">设计院管理</string>
+	<string name="task_detail">详细信息</string>
+    <string name="WebUrl">http://10.0.0.136/fastupmiswebapp</string>
+    <!--
+    <string name="WebServiceSite">http://10.211.55.4:8008/WebService.asmx</string>
+    -->
+    <!--<string name="WebService">http://10.0.0.2:8888/WebService.asmx</string>-->
+    <string name="WebService">http://10.0.0.2:8088/CnpcMobile/</string>
+
+
+    <string name="item_empty_msg">数据正在飞过来哦~~</string>
+    <string name="imgDesc">img</string>
+
+    <string name="title_activity_appstart">设计院管理</string>
+    <string name="title_activity_task_detail">TaskDetailActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_mytask">MyTaskActivity</string>
+    <string name="title_activity_news_detail">NewsDetailActivity</string>
+
+
+    <!-- settings Item Name -->
+    <string name="pref_user_info">个人信息</string>
+
+    <string name="pref_switch_push">接受推送</string>
+    <string name="pref_switch_push_news">新闻推送</string>
+    <string name="pref_switch_push_task">任务提醒</string>
+
+    <string name="pref_about">关于产品</string>
+    <string name="pref_updata">检查更新</string>
+
+    <string name="pref_clear_cache">清除缓存</string>
+    <string name="pref_service_config">数据源配置</string>
+
+
+</resources>

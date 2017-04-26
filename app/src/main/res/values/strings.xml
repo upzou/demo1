@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">设计院管理</string>
+    <string name="WebServiceSite">10.0.0.2:8088/CnpcMobile/</string>
+    <string name="DB_NEWS">tesNew.db</string>
+    <string name="DB_TASK">testTask.db</string>
+    <string name="TABLE_NEWS">tesNews</string>
+    <string name="TABLE_TASK">testTask</string>
+
+
+</resources>

@@ -1,0 +1,66 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/head_layout"
+        layout="@layout/head_panel_layout"/>
+    <!-- Login progress -->
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <EditText
+                android:id="@+id/login_user_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/login_editbox"
+                android:hint="账号"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15sp"/>
+
+            <EditText
+                android:background="@drawable/login_editbox"
+
+                android:id="@+id/login_passwd_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:hint="密码"
+                android:password="true"
+                android:singleLine="true"
+                android:textColor="#000"
+                android:textSize="15sp"/>
+
+            <Button
+                android:background="@drawable/login_editbox"
+                android:id="@+id/login_btn"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:text="登录"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

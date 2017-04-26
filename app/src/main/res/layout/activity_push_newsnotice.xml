@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/head_layout"
+        layout="@layout/head_panel_layout"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_push_list"
+        android:orientation="horizontal">
+
+        <ListView
+            android:id="@+id/lv_push_news_notice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#0000"/>
+
+        <LinearLayout
+            android:id="@+id/ll_push_news_notice_empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="还没有推送来的新闻哦!"
+                android:textColor="#000"
+                android:textSize="22sp"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <Button
+            android:background="@drawable/selector_bt_background"
+            android:id="@+id/bt_one"
+            android:layout_width="0dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <Button
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:background="@drawable/selector_bt_background"
+            android:id="@+id/bt_two"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+</LinearLayout>

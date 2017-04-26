@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include
+        android:id="@+id/head_layout"
+        layout="@layout/head_panel_layout"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <RelativeLayout
+                android:id="@+id/layout_user_info"
+                style="@style/item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_preference_complete"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/pref_user_info"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/imgDesc"
+                    android:src="@drawable/mm_submenu"/>
+            </RelativeLayout>
+
+            <fastandroid.fast.com.cn.fastandroid.ui.SwitchButton
+                android:id="@+id/switch_push"
+                style="@style/item"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/selector_preference_complete"
+                android:checked="true"
+                android:text="@string/pref_switch_push"
+                android:textSize="16sp"
+                app:frameDrawable="@drawable/switch_frame"
+                app:sliderDrawable="@drawable/selector_switch_slider"
+                app:stateDrawable="@drawable/selector_switch_state"
+                app:stateMaskDrawable="@drawable/switch_state_mask"
+                app:withTextInterval="16dp"/>
+
+
+            <RelativeLayout
+                android:id="@+id/layout_about"
+                style="@style/item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/selector_preference_header"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_about"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/imgDesc"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_updata"
+                style="@style/item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_preference_footer"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_updata"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/imgDesc"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu"/>
+            </RelativeLayout>
+
+            <!-- 清除缓存 -->
+            <RelativeLayout
+                android:id="@+id/layout_clear_cache"
+                style="@style/item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/selector_preference_header"
+                android:clickable="true"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pref_clear_cache"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:contentDescription="@string/imgDesc"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu"/>
+            </RelativeLayout>
+            <!-- 设置数据源 -->
+            <RelativeLayout
+                android:id="@+id/layout_server_config"
+                style="@style/item"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_preference_footer"
+                android:clickable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/pref_service_config"
+                    android:textColor="#000"
+                    android:textSize="16sp"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:contentDescription="@string/imgDesc"
+                    android:src="@drawable/mm_submenu"/>
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_login_out"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/selector_preference_complete"
+                android:text="退出登录"
+                android:textSize="18sp"/>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
