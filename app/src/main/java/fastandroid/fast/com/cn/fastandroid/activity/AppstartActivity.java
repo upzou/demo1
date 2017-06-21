@@ -12,12 +12,13 @@ import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
 import fastandroid.fast.com.cn.fastandroid.R;
+import fastandroid.fast.com.cn.fastandroid.utils.SPUtil;
 
 
 public class AppstartActivity extends Activity {
     private Set<String> tagSet = new LinkedHashSet<String>();
     public static final String TAG = "AppstartActivity";
-    public  SharedPreferences mPref;
+    public SharedPreferences mPref;
 
 
     @Override
@@ -30,7 +31,9 @@ public class AppstartActivity extends Activity {
         JPushInterface.init(this);//初始化JPush
 
         mPref = getSharedPreferences("config", Context.MODE_PRIVATE);
+        SPUtil.setBoolean(getBaseContext(), "UpDateLater", false);//每次打开提示用户更新
 
+        UpdateVersion();
 
 //        tagSet.add("点点");
 //        tagSet.add("金三胖");
@@ -56,6 +59,11 @@ public class AppstartActivity extends Activity {
         }, 3000);
     }
 
+    private void UpdateVersion() {
+
+    }
+
+    //设置标签,别名
 //    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {
 //
 //        @Override

@@ -7,23 +7,25 @@ import java.util.List;
  * Created by zzs on 2017/3/6
  */
 public class ResponseHome {
-    private int version;
-    List<App> appList = new ArrayList<App>();
+    private int menuver;
+    private List<App> appList = new ArrayList<App>();
+    private Appver appver;
 
     public ResponseHome() {
     }
 
-    public ResponseHome(int version, List<App> appList) {
-        this.version = version;
+    public ResponseHome(int menuver, List<App> appList, Appver appver) {
+        this.menuver = menuver;
         this.appList = appList;
+        this.appver = appver;
     }
 
-    public int getVersion() {
-        return version;
+    public int getMenuver() {
+        return menuver;
     }
 
-    public void setVersion(int version) {
-        this.version = version;
+    public void setMenuver(int menuver) {
+        this.menuver = menuver;
     }
 
     public List<App> getAppList() {
@@ -34,11 +36,20 @@ public class ResponseHome {
         this.appList = appList;
     }
 
+    public Appver getAppver() {
+        return appver;
+    }
+
+    public void setAppver(Appver appver) {
+        this.appver = appver;
+    }
+
     @Override
     public String toString() {
         return "ResponseHome{" +
-                "version=" + version +
+                "menuver=" + menuver +
                 ", appList=" + appList +
+                ", appver=" + appver +
                 '}';
     }
 }

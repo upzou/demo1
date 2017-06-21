@@ -68,7 +68,7 @@ public class DetailActivity extends Activity {
         if (TextUtils.isEmpty(detail_url)) {
             detail_url = "http://www.fast.com.cn";
         }
-
+        Log.e(TAG, "detail_url: "+detail_url);
 
         WebView webview_detail = (WebView) findViewById(R.id.webview_detail);
         final ProgressBar pb = (ProgressBar) findViewById(R.id.webv_progressBar);

@@ -1,16 +1,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-	<include
+    <include
         android:id="@+id/head_layout"
-        layout="@layout/head_panel_layout" />
-    
+        layout="@layout/head_panel_layout"/>
+
     <TextView
         android:id="@+id/tv_about"
         android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+        android:layout_height="fill_parent"
         android:layout_below="@+id/head_layout"
-        android:layout_margin="10sp"/>
+        android:layout_margin="16sp"
+        android:gravity="center"
+        android:text="测试"/>
 
 </RelativeLayout>

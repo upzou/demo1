@@ -22,30 +22,30 @@
             android:paddingBottom="16dp"
             android:paddingTop="16dp">
 
-            <RelativeLayout
-                android:id="@+id/layout_user_info"
-                style="@style/item"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_preference_complete"
-                android:clickable="true">
+            <!--<RelativeLayout-->
+                <!--android:id="@+id/layout_user_info"-->
+                <!--style="@style/item"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:background="@drawable/selector_preference_complete"-->
+                <!--android:clickable="true">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/pref_user_info"
-                    android:textColor="#000"
-                    android:textSize="16sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:text="@string/pref_user_info"-->
+                    <!--android:textColor="#000"-->
+                    <!--android:textSize="16sp"/>-->
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/imgDesc"
-                    android:src="@drawable/mm_submenu"/>
-            </RelativeLayout>
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentRight="true"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:contentDescription="@string/imgDesc"-->
+                    <!--android:src="@drawable/mm_submenu"/>-->
+            <!--</RelativeLayout>-->
 
             <fastandroid.fast.com.cn.fastandroid.ui.SwitchButton
                 android:id="@+id/switch_push"

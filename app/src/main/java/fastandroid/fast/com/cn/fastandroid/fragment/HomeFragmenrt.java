@@ -1,8 +1,12 @@
 package fastandroid.fast.com.cn.fastandroid.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,9 +28,13 @@ import java.util.List;
 import fastandroid.fast.com.cn.fastandroid.R;
 import fastandroid.fast.com.cn.fastandroid.activity.PushNewsNoticeActivity;
 import fastandroid.fast.com.cn.fastandroid.activity.PushTasklistActivity;
+import fastandroid.fast.com.cn.fastandroid.activity.UpdateVersionService;
 import fastandroid.fast.com.cn.fastandroid.adapter.HomeAppAdapter;
 import fastandroid.fast.com.cn.fastandroid.bean.MenuDetail;
 import fastandroid.fast.com.cn.fastandroid.bean.ResponseHome;
+import fastandroid.fast.com.cn.fastandroid.utils.NetWorkUtil;
+import fastandroid.fast.com.cn.fastandroid.utils.SPUtil;
+import fastandroid.fast.com.cn.fastandroid.utils.ServiceUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.HttpUrl;
@@ -43,7 +51,7 @@ import static fastandroid.fast.com.cn.fastandroid.activity.MainActivity.showToas
 
 public class HomeFragmenrt extends Fragment {
     private View mHomeFragmenrtView;
-
+    private Context mContext;
     public ResponseHome responseResult;//接收返回结果的对象
     public static HomeAppAdapter homeAppAdapter;//首页APP列表listview适配器
     public final String TAG = "MainActivity";
@@ -53,6 +61,7 @@ public class HomeFragmenrt extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getActivity();
 //        initData();
 //        Log.e(TAG, "onCreate: " + "onCreate加载数据");
     }
@@ -72,6 +81,8 @@ public class HomeFragmenrt extends Fragment {
         LinearLayout ll_homeapp_empty = (LinearLayout) mHomeFragmenrtView.findViewById(R.id.ll_homeapp_empty);
         TextView midle_title = (TextView) mHomeFragmenrtView.findViewById(R.id.midle_title);
         midle_title.setText("首页");
+
+
 
         try {
             Thread.sleep(500);
@@ -103,6 +114,12 @@ public class HomeFragmenrt extends Fragment {
                 }
             }
         });
+
+
+        boolean UpDateLater = SPUtil.getBoolean(mContext, "UpDateLater", false);
+        if (!UpDateLater) {
+            UpDateVersion(getContext());
+        }
 
         return mHomeFragmenrtView;
 
@@ -187,6 +204,13 @@ public class HomeFragmenrt extends Fragment {
                 try {
                     //将返回结果解析成ResponseHome对象
                     responseResult = JSON.parseObject(responseHome, ResponseHome.class);
+
+                    //将版本信息存储到sp
+                    String androidver = responseResult.getAppver().getAndroidver();
+                    String androidurl = responseResult.getAppver().getAndroidurl();
+                    SPUtil.setString(getActivity(), "androidver", androidver);
+                    SPUtil.setString(getActivity(), "androidurl", androidurl);
+
                     //初始化首页APP列表listview适配器
                     homeAppAdapter = new HomeAppAdapter(getActivity(), responseResult.getAppList());
                 } catch (Exception e) {
@@ -211,5 +235,88 @@ public class HomeFragmenrt extends Fragment {
         }
         return false;
     }
+
+    public  void UpDateVersion(final Context mContext) {
+
+        PackageManager packageManager = mContext.getPackageManager();
+        PackageInfo packageInfo = null;
+        try {
+            packageInfo = packageManager.getPackageInfo(mContext.getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        String versionName = packageInfo.versionName;
+//        String versionName = "1.2";
+        Log.e(TAG, "versionName: " + versionName);
+
+        String androidver = SPUtil.getString(mContext, "androidver", "");
+
+        if (versionName.equals(androidver)) {
+        } else {
+
+            int checkedNetWorkType = NetWorkUtil.checkedNetWorkType(mContext);
+            Log.e(TAG, "checkedNetWorkType: " + checkedNetWorkType);
+
+            switch (checkedNetWorkType) {
+                case NetWorkUtil.NONETWORK:
+                    Toast.makeText(mContext, "网络连接异常,请检查后再试!", Toast.LENGTH_SHORT).show();
+                    break;
+                case NetWorkUtil.WIFI:
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mContext);
+                    builder1.setTitle("发现新版本")
+                            .setMessage("当前版本:" + versionName + "\n最新版本:" + androidver)
+                            .setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+//                                        downAsynFile();
+
+                                    Intent intent = new Intent(mContext, UpdateVersionService.class);
+
+                                    boolean isServiceWork = ServiceUtil.isServiceWork(mContext, "fastandroid.fast.com.cn.fastandroid.activity.UpdateVersionService");
+                                    if (isServiceWork) {
+                                        Toast.makeText(mContext, "正在下载最新的安装包", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        mContext.startService(intent);
+                                    }
+
+                                }
+                            })
+                            .setNegativeButton("以后再说", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    SPUtil.setBoolean(mContext, "UpDateLater", true);
+                                }
+                            }).show();
+                    break;
+                case NetWorkUtil.NOWIFI:
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    builder.setTitle("发现新版本!");
+                    builder.setMessage("当前不是wifi连接,继续下载会耗费数据流量,是否继续?")
+                            .setPositiveButton("继续", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+//                                            if (file.exists() && file.getName().equals("gdmsaec-app.apk")) {
+//                                            }
+
+                                    Intent intent = new Intent(mContext, UpdateVersionService.class);
+//                                        intent.putExtra("downloadUrl", "http://app.mi.com/download/294");
+                                    boolean isServiceWork = ServiceUtil.isServiceWork(mContext, "fastandroid.fast.com.cn.fastandroid.activity.UpdateVersionService");
+                                    if (isServiceWork) {
+                                        Toast.makeText(mContext, "正在下载最新的安装包", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        mContext.startService(intent);
+                                    }
+
+                                }
+                            })
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    SPUtil.setBoolean(mContext, "UpDateLater", true);
+                                }
+                            }).show();
+                    break;
+            }
+        }
+    }
+
 
 }

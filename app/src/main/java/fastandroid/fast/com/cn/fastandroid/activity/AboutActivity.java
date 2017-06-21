@@ -1,6 +1,7 @@
 package fastandroid.fast.com.cn.fastandroid.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -13,59 +14,62 @@ import fastandroid.fast.com.cn.fastandroid.R;
 
 public class AboutActivity extends Activity {
 
-	private TextView mMID_title;
-	private View mBackView;
-	private ImageView mImageLeft;
-	private TextView mLeft_title;
-	private TextView mAboutTxt;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_about);
-		
-		initView();
-	}
-	
-	private void initView()
-	{
-		mMID_title = (TextView)findViewById(R.id.midle_title);
-		mMID_title.setText("关于");
-		
-		mImageLeft = (ImageView)findViewById(R.id.left_image);
-		mImageLeft.setImageResource(R.drawable.angle_left);
-		
-		mLeft_title = (TextView)findViewById(R.id.left_title);
-		mLeft_title.setText("返回");
-		
-		mBackView = findViewById(R.id.view_left); 
-		mBackView.setOnClickListener(new View.OnClickListener() {
-			//点击返回
-			public void onClick(View v) {
-				AboutActivity.this.finish();
-			}
-		});
-		
-		mAboutTxt = (TextView)findViewById(R.id.tv_about);
-		mAboutTxt.setText("版本号:V2.0");
-		
-	}
-	
-	/**
-	 * 获取版本号
-	 * @return 当前应用的版本号
-	 */
-	public String getVersion() {
-	    try {
-	        PackageManager manager = this.getPackageManager();
-	        PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
-	        String version = info.versionName;
-	        return this.getString(R.string.version_name) + version;
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return this.getString(R.string.no_found_version_name);
-	    }
-	}
+    private TextView mMID_title;
+    private View mBackView;
+    private ImageView mImageLeft;
+    private TextView mLeft_title;
+    private TextView mAboutTxt;
+    private String versionName;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_about);
+
+        Intent intent = getIntent();
+        versionName = intent.getStringExtra("versionName");
+        initView();
+    }
+
+    private void initView() {
+        mMID_title = (TextView) findViewById(R.id.midle_title);
+        mMID_title.setText("关于");
+
+        mImageLeft = (ImageView) findViewById(R.id.left_image);
+        mImageLeft.setImageResource(R.drawable.angle_left);
+
+        mLeft_title = (TextView) findViewById(R.id.left_title);
+        mLeft_title.setText("返回");
+
+        mBackView = findViewById(R.id.view_left);
+        mBackView.setOnClickListener(new View.OnClickListener() {
+            //点击返回
+            public void onClick(View v) {
+                AboutActivity.this.finish();
+            }
+        });
+
+        mAboutTxt = (TextView) findViewById(R.id.tv_about);
+        mAboutTxt.setText("版本号:" + versionName);
+
+    }
+
+    /**
+     * 获取版本号
+     *
+     * @return 当前应用的版本号
+     */
+    public String getVersion() {
+        try {
+            PackageManager manager = this.getPackageManager();
+            PackageInfo info = manager.getPackageInfo(this.getPackageName(), 0);
+            String version = info.versionName;
+            return this.getString(R.string.version_name) + version;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return this.getString(R.string.no_found_version_name);
+        }
+    }
 
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {

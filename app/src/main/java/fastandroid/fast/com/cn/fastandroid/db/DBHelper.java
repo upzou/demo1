@@ -11,9 +11,10 @@ import android.util.Log;
 public class DBHelper extends SQLiteOpenHelper {
     public static final String TAG = "DBHelper";
     private final static int VERSION = 3;
-    //    private final static String DB_NAME = "testNewsss.db";
 
-    private final static String CREATE_TBL_NEWS = "create table tesNews(_id integer primary key autoincrement, title text, content text,time text,appid text, url text,isRead text)";
+    private final static String CREATE_TBL_NEWS = "create table tesNews(_id integer primary key " +
+            "autoincrement, title text, content text,time text,appid text, url text,isRead text)";
+
     private SQLiteDatabase db;
 
     //SQLiteOpenHelper子类必须要的一个构造函数
@@ -49,8 +50,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "update Database");
-//        db.execSQL("ALTER TABLE testNews ADD COLUMN isRead text");
-
     }
 
     //插入方法

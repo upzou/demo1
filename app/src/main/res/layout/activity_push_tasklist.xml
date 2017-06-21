@@ -41,13 +41,13 @@
         android:layout_height="45dp">
 
         <Button
-            android:textSize="16sp"
-            android:textColor="@android:color/white"
-            android:background="@drawable/selector_bt_background"
             android:id="@+id/bt_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:background="@drawable/selector_bt_background"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 

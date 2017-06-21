@@ -1,6 +1,8 @@
 package fastandroid.fast.com.cn.fastandroid.fragment;
 
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,6 +22,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+
 import cn.jpush.android.api.JPushInterface;
 import fastandroid.fast.com.cn.fastandroid.R;
 import fastandroid.fast.com.cn.fastandroid.activity.AboutActivity;
@@ -28,6 +32,7 @@ import fastandroid.fast.com.cn.fastandroid.db.CacheDao;
 import fastandroid.fast.com.cn.fastandroid.db.CacheService;
 import fastandroid.fast.com.cn.fastandroid.db.SettingInfo;
 import fastandroid.fast.com.cn.fastandroid.ui.SwitchButton;
+import fastandroid.fast.com.cn.fastandroid.utils.UpDateVersionUtil;
 import okhttp3.HttpUrl;
 
 
@@ -50,11 +55,21 @@ public class SettingFragment extends Fragment {
     private Context mContext;
 
     private SharedPreferences mPref;
+    public static final String TAG = "SettingFragment";
+
+    private NotificationManager nm;
+    private Notification notification;
+
+    private File file;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         System.out.println("SettingFragment--onCreate");
         super.onCreate(savedInstanceState);
+
+        file = new File("/sdcard/设计院管理.apk");
+
 
         initData();
     }
@@ -115,7 +130,6 @@ public class SettingFragment extends Fragment {
         btnLoginOut = ((Button) mFragmentView.findViewById(R.id.btn_login_out));
         layoutAbout = mFragmentView.findViewById(R.id.layout_about);
         layoutUpdata = mFragmentView.findViewById(R.id.layout_updata);
-        layoutUserInfo = mFragmentView.findViewById(R.id.layout_user_info);
 
         layoutClearCache = mFragmentView.findViewById(R.id.layout_clear_cache);
         layoutDataAddConfig = mFragmentView.findViewById(R.id.layout_server_config);
@@ -144,14 +158,7 @@ public class SettingFragment extends Fragment {
             }
         });
 
-        //submenu 个人信息
-        layoutUserInfo.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("SettingFragment--00000");
 
-            }
-        });
 
         //submenu 关于
         layoutAbout.setOnClickListener(new OnClickListener() {
@@ -159,6 +166,8 @@ public class SettingFragment extends Fragment {
             public void onClick(View v) {
                 //Item点击代码这里添加
                 Intent intent = new Intent(mContext, AboutActivity.class);
+                String versionName = getVersionName(mContext);
+                intent.putExtra("versionName", versionName);
                 startActivity(intent);
             }
         });
@@ -173,6 +182,13 @@ public class SettingFragment extends Fragment {
 //                        .show();
 //            }
 //        });
+
+        layoutUpdata.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                UpDateVersionUtil.UpDateVersion(mContext);//版本更新
+            }
+        });
 
         layoutClearCache.setOnClickListener(new OnClickListener() {
 
@@ -301,6 +317,51 @@ public class SettingFragment extends Fragment {
         }
         String CurVersion = info.versionName;
     }
+
+
+    public String getVersionName(Context context) {
+        try {
+            PackageManager packageManager = context.getPackageManager();
+            PackageInfo packageInfo = packageManager.getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionName;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+//    private void downAsynFile() {
+//        OkHttpClient mOkHttpClient = new OkHttpClient();
+//        String url = "http://app.mi.com/download/294";
+//        Request request = new Request.Builder().url(url).build();
+//        mOkHttpClient.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//
+//            @Override
+//            public void onResponse(Call call, Response response) {
+//                InputStream inputStream = response.body().byteStream();
+//                FileOutputStream fileOutputStream = null;
+//                try {
+//                    fileOutputStream = new FileOutputStream(new File("/sdcard/FSTfast.apk"));
+//                    byte[] buffer = new byte[2048];
+//                    int len = 0;
+//                    while ((len = inputStream.read(buffer)) != -1) {
+//                        fileOutputStream.write(buffer, 0, len);
+//                    }
+//                    fileOutputStream.flush();
+//                } catch (IOException e) {
+//                    Log.i("wangshu", "IOException");
+//                    e.printStackTrace();
+//                }
+//
+//                Log.d("wangshu", "文件下载成功");
+//            }
+//        });
+//    }
 
 
 }

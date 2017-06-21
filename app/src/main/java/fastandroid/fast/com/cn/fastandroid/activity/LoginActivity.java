@@ -69,7 +69,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
 //        String encrypt = Aes.encrypt("admin|9413E8CD76924AAD8C290DF01656F148|123", PASSWORD_STRING);
 //        Log.e(TAG, "encrypt: "+ encrypt);
 
@@ -291,6 +290,7 @@ public class LoginActivity extends Activity {
                                 editor.putString("device", registrationID);
                                 editor.putString("token", TOKEN);
                                 String user_token = responseLogin.getUser_token();
+                                Log.e(TAG, "user_token: "+user_token );
                                 editor.putString("user_token", user_token);
                                 editor.putString("user_code", responseLogin.getUser_code());
                                 editor.commit();
