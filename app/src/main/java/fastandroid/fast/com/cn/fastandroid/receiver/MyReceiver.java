@@ -46,11 +46,9 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-
         Bundle bundle = intent.getExtras();
 
         ContentValues contentValues = new ContentValues();
-
 
         Log.d(TAG, "[MyReceiver] onReceive - " + intent.getAction() + ", extras: " + printBundle(bundle));
 
@@ -103,7 +101,7 @@ public class MyReceiver extends BroadcastReceiver {
             news.setRead(false);
             news.setTime(pushTime);
             contentValues.put("time", pushTime);
-//
+
             DBHelper dbHelper = new DBHelper(context, context.getString(R.string.DB_NEWS));//获取数据库帮组对象
             //将接收到的通知存入本地数据库
             for (String key : bundle.keySet()) {

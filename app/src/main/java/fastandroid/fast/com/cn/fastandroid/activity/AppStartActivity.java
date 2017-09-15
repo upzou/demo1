@@ -11,29 +11,26 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import cn.jpush.android.api.JPushInterface;
+import fastandroid.fast.com.cn.fastandroid.Constant;
 import fastandroid.fast.com.cn.fastandroid.R;
 import fastandroid.fast.com.cn.fastandroid.utils.SPUtil;
 
 
-public class AppstartActivity extends Activity {
-    private Set<String> tagSet = new LinkedHashSet<String>();
-    public static final String TAG = "AppstartActivity";
+public class AppStartActivity extends Activity {
+    private Set<String> tagSet = new LinkedHashSet<String>();// TODO: 2017/9/14 根据标签,别名推送
+    public final String TAG = "AppStartActivity";
     public SharedPreferences mPref;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_appstart);
 
-
         JPushInterface.setDebugMode(true);//设置JPush调试模式
         JPushInterface.init(this);//初始化JPush
 
-        mPref = getSharedPreferences("config", Context.MODE_PRIVATE);
-        SPUtil.setBoolean(getBaseContext(), "UpDateLater", false);//每次打开提示用户更新
-
-        UpdateVersion();
+        mPref = getSharedPreferences(Constant.SP_NAME, Context.MODE_PRIVATE);
+        SPUtil.setBoolean(getBaseContext(), "UpDateLater", false);//每次启动软件时提示用户更新
 
 //        tagSet.add("点点");
 //        tagSet.add("金三胖");
@@ -41,7 +38,7 @@ public class AppstartActivity extends Activity {
 //        JPushInterface.setAliasAndTags(this, null, tagSet, mTagsCallback);
 
 
-//        加入延迟，3秒后进入主界面
+//        加入延迟，3秒后跳转
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -49,19 +46,16 @@ public class AppstartActivity extends Activity {
 
                 //如果 是第一次运行则进入登录界面,否则进入主界面
                 if (mPref.getBoolean("isFirstRun", false)) {
-                    intent.setClass(AppstartActivity.this, MainActivity.class);
+                    intent.setClass(AppStartActivity.this, MainActivity.class);
                 } else {
-                    intent.setClass(AppstartActivity.this, LoginActivity.class);
+                    intent.setClass(AppStartActivity.this, LoginActivity.class);
                 }
                 startActivity(intent);
-                AppstartActivity.this.finish();
+                AppStartActivity.this.finish();
             }
         }, 3000);
     }
 
-    private void UpdateVersion() {
-
-    }
 
     //设置标签,别名
 //    private final TagAliasCallback mTagsCallback = new TagAliasCallback() {

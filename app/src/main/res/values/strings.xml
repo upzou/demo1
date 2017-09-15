@@ -6,5 +6,7 @@
     <string name="TABLE_NEWS">tesNews</string>
     <string name="TABLE_TASK">testTask</string>
 
+    <string name="SP_NAME">config</string>
+
 
 </resources>

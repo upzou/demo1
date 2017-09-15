@@ -67,7 +67,6 @@ public class HomeAppAdapter extends BaseAdapter {
         Picasso.with(holder.iv_app_icon.getContext()).load(app.getIcon()).into(holder.iv_app_icon);
         holder.tv_app_name.setText(app.getName());
 
-
         DBHelper dbHelper = new DBHelper(mContext, mContext.getString(R.string.DB_NEWS));//查询数据库里存储的标签isRead
         Cursor cursor = dbHelper.query(mContext.getString(R.string.TABLE_NEWS));
         while (cursor.moveToNext()) {

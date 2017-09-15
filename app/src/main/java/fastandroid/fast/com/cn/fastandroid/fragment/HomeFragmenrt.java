@@ -1,6 +1,7 @@
 package fastandroid.fast.com.cn.fastandroid.fragment;
 
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -26,12 +27,13 @@ import java.io.Serializable;
 import java.util.List;
 
 import fastandroid.fast.com.cn.fastandroid.R;
+import fastandroid.fast.com.cn.fastandroid.activity.DetailActivity;
 import fastandroid.fast.com.cn.fastandroid.activity.PushNewsNoticeActivity;
-import fastandroid.fast.com.cn.fastandroid.activity.PushTasklistActivity;
 import fastandroid.fast.com.cn.fastandroid.activity.UpdateVersionService;
 import fastandroid.fast.com.cn.fastandroid.adapter.HomeAppAdapter;
 import fastandroid.fast.com.cn.fastandroid.bean.MenuDetail;
 import fastandroid.fast.com.cn.fastandroid.bean.ResponseHome;
+import fastandroid.fast.com.cn.fastandroid.db.DBHelper;
 import fastandroid.fast.com.cn.fastandroid.utils.NetWorkUtil;
 import fastandroid.fast.com.cn.fastandroid.utils.SPUtil;
 import fastandroid.fast.com.cn.fastandroid.utils.ServiceUtil;
@@ -95,22 +97,27 @@ public class HomeFragmenrt extends Fragment {
         lv_home_app.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                List<MenuDetail> names = responseResult.getAppList().get(i).getMenu();
                 if (i == 0) {
                     Intent intent = new Intent(getActivity(), PushNewsNoticeActivity.class);
-                    List<MenuDetail> names = responseResult.getAppList().get(i).getMenu();
                     //将MenuDetail对象传到MenuActivity
                     intent.putExtra("menu", (Serializable) names);
                     startActivity(intent);
                 }
                 if (i == 1) {
-                    Intent intent = new Intent();
-                    List<MenuDetail> names = responseResult.getAppList().get(i).getMenu();
-                    //将appname传到MenuActivity,用来设置mMID_title的名称
-                    intent.putExtra("appname", responseResult.getAppList().get(i).getName());
-                    //将MenuDetail对象传到MenuActivity
-                    intent.putExtra("menu", (Serializable) names);
-                    intent.setClass(getActivity(), PushTasklistActivity.class);
-                    startActivity(intent);
+
+                    Intent intent1 = new Intent(getActivity(), DetailActivity.class);
+                    String url =names.get(0).getUrl();
+                    intent1.putExtra("detail_url", url);
+                    startActivity(intent1);
+
+                    DBHelper dbHelper = new DBHelper(getActivity(), getString(R.string.DB_NEWS));
+                    ContentValues contentValues = new ContentValues();
+                    contentValues.put("isRead", 0);
+                    dbHelper.update(contentValues, "appid=?", new String[]{"2"}, getString(R.string.TABLE_NEWS));
+                    dbHelper.close();
+                    homeAppAdapter.notifyDataSetChanged();
+
                 }
             }
         });

@@ -25,6 +25,7 @@ import com.alibaba.fastjson.JSONException;
 import java.io.IOException;
 
 import cn.jpush.android.api.JPushInterface;
+import fastandroid.fast.com.cn.fastandroid.Constant;
 import fastandroid.fast.com.cn.fastandroid.R;
 import fastandroid.fast.com.cn.fastandroid.bean.ResponseLogin;
 import okhttp3.Call;
@@ -38,13 +39,12 @@ import okhttp3.Response;
 
 
 /**
- * A login screen that offers login via email/password.
+ * 登录界面
  */
 public class LoginActivity extends Activity {
     public static final String TOKEN = "9413E8CD76924AAD8C290DF01656F148";//token值
     private static final String PASSWORD_STRING = "12901256789012347344565678890123";//密钥
     public static final MediaType REQUEST_FORMAT = MediaType.parse("application/json; charset=utf-8");
-
 
     private String TAG = "LoginActivity";
     private Context mContext;
@@ -52,9 +52,9 @@ public class LoginActivity extends Activity {
     private TextView mMID_title;
     private ImageView mRightImage;
     private View mRightView;
+
     private EditText mUser; // 帐号编辑框
     private EditText mPassword; // 密码编辑框
-    //    private CircularProgressButton btnLogin;
     private Button btnLogin;
 
     private String mWebServiceSite;
@@ -72,7 +72,7 @@ public class LoginActivity extends Activity {
 //        String encrypt = Aes.encrypt("admin|9413E8CD76924AAD8C290DF01656F148|123", PASSWORD_STRING);
 //        Log.e(TAG, "encrypt: "+ encrypt);
 
-        mPref = getSharedPreferences("config", Context.MODE_PRIVATE);
+        mPref = getSharedPreferences(Constant.SP_NAME, Context.MODE_PRIVATE);
 
         String webURL = mPref.getString("webURL", "");
         if (webURL.equals("")) {
@@ -82,18 +82,21 @@ public class LoginActivity extends Activity {
             mWebServiceSite = webURL;
         }
         Log.d(TAG, "[URL]" + mWebServiceSite);
-        initView();
+
+        init();
 
     }
 
-    private void initView() {
+    private void init() {
         mContext = this;
 
         mMID_title = (TextView) findViewById(R.id.midle_title);
         mUser = (EditText) findViewById(R.id.login_user_edit);
         mPassword = (EditText) findViewById(R.id.login_passwd_edit);
-
-        //如果有登陆记录则在编辑框回显
+        mRightImage = (ImageView) findViewById(R.id.right_image);
+        mRightView = findViewById(R.id.view_right);
+        btnLogin = (Button) findViewById(R.id.login_btn);
+        //如果有登陆记录则回显在编辑框
         String spUn = mPref.getString("un", "");
         String spPwd = mPref.getString("pwd", "");
         mUser.setText(spUn);
@@ -102,10 +105,10 @@ public class LoginActivity extends Activity {
 
         mMID_title.setText("登陆");
 
-        mRightImage = (ImageView) findViewById(R.id.right_image);
+
         mRightImage.setImageResource(R.drawable.set);
 
-        mRightView = findViewById(R.id.view_right);
+
         mRightView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 final android.widget.EditText et = new android.widget.EditText(mContext);
@@ -130,7 +133,7 @@ public class LoginActivity extends Activity {
                                 if (parse == null) {
                                     Toast.makeText(mContext, "数据输入有误,写入失败!", Toast.LENGTH_SHORT).show();
                                 } else {
-
+                                    //将用户输入的地址存入SharedPreferences
                                     SharedPreferences.Editor editor = mPref.edit();
                                     editor.putString("webURL", baseURL);
                                     editor.putString("userInput", IPandHost);
@@ -148,7 +151,7 @@ public class LoginActivity extends Activity {
             }
         });
 
-        btnLogin = (Button) findViewById(R.id.login_btn);
+
         btnLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,10 +330,6 @@ public class LoginActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
-
-
-
-
 
 
  /*       String pwdMD5 = MD5("123");

@@ -2,9 +2,11 @@ package fastandroid.fast.com.cn.fastandroid.activity;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,7 @@ import fastandroid.fast.com.cn.fastandroid.R;
 import fastandroid.fast.com.cn.fastandroid.adapter.TaskAdapter;
 import fastandroid.fast.com.cn.fastandroid.bean.MenuDetail;
 import fastandroid.fast.com.cn.fastandroid.bean.News;
+import fastandroid.fast.com.cn.fastandroid.bean.ResponseHome;
 import fastandroid.fast.com.cn.fastandroid.db.DBHelper;
 
 import static fastandroid.fast.com.cn.fastandroid.fragment.HomeFragmenrt.homeAppAdapter;
@@ -35,6 +39,8 @@ public class PushTasklistActivity extends Activity {
     private List<MenuDetail> menus;
     private List<News> mTaskData;
     public static TaskAdapter taskAdapter;
+    private String mWebServiceSite;
+    public ResponseHome responseResult;//接收返回结果的对象
 
 
     @Override
@@ -42,11 +48,21 @@ public class PushTasklistActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push_tasklist);
 
-        initData();
 
-        initView();
+        Intent intent = getIntent();
+        //获取传过来的MenuDetail集合
+        menus = (List<MenuDetail>) intent.getSerializableExtra("menu");
+
+        Intent intent1 = new Intent(getApplication(), DetailActivity.class);
+        String url = menus.get(0).getUrl();//将对应的url传到详情界面
+        intent1.putExtra("detail_url", url);
+        startActivity(intent1);
+
+//        initData();
+//        initView();
 
     }
+
 
     private void initView() {
         ListView lv_push_tasklist = (ListView) findViewById(R.id.lv_push_tasklist);
@@ -107,9 +123,6 @@ public class PushTasklistActivity extends Activity {
 
 
     private void initData() {
-        Intent intent = getIntent();
-        //获取传过来的MenuDetail集合
-        menus = (List<MenuDetail>) intent.getSerializableExtra("menu");
 
         mTaskData = new ArrayList<>();
 
@@ -153,4 +166,17 @@ public class PushTasklistActivity extends Activity {
         dbHelper.close();
 
     }
+
+    public static void showToast(final String toast, final Context context) {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Looper.prepare();
+                Toast.makeText(context, toast, Toast.LENGTH_SHORT).show();
+                Looper.loop();
+            }
+        }).start();
+    }
+
 }

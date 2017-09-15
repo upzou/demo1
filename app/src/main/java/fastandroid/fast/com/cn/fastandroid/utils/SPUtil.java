@@ -3,13 +3,17 @@ package fastandroid.fast.com.cn.fastandroid.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import fastandroid.fast.com.cn.fastandroid.Constant;
+
 /**
+ * SharedPreferences工具类
+ *
  * Created by zzs on 2017/5/12
  */
 
 public class SPUtil {
     private static SharedPreferences	mSp;
-    private final static String			SP_NAME	= "config";
+    private final static String			SP_NAME	= Constant.SP_NAME;
 
     /**
      * 获得sharePreference内存对象
