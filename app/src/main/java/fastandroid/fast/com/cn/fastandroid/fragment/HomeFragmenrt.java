@@ -106,6 +106,7 @@ public class HomeFragmenrt extends Fragment {
                 }
                 if (i == 1) {
 
+
                     Intent intent1 = new Intent(getActivity(), DetailActivity.class);
                     String url =names.get(0).getUrl();
                     intent1.putExtra("detail_url", url);
@@ -121,6 +122,8 @@ public class HomeFragmenrt extends Fragment {
                 }
             }
         });
+
+        
 
 
         boolean UpDateLater = SPUtil.getBoolean(mContext, "UpDateLater", false);
